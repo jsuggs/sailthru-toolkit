@@ -1,0 +1,15 @@
+[submodule "vendor/SailThru"]
+	path = vendor/SailThru
+	url = https://github.com/sailthru/sailthru-php5-client
+[submodule "vendor/Symfony/Component/Console"]
+	path = vendor/Symfony/Component/Console
+	url = git://github.com/symfony/Console.git
+[submodule "vendor/Symfony/Component/ClassLoader"]
+	path = vendor/Symfony/Component/ClassLoader
+	url = git://github.com/symfony/ClassLoader.git
+[submodule "vendor/Symfony/Component/Yaml"]
+	path = vendor/Symfony/Component/Yaml
+	url = git://github.com/symfony/Yaml.git
+[submodule "vendor/Symfony/Component/Config"]
+	path = vendor/Symfony/Component/Config
+	url = git://github.com/symfony/Config.git

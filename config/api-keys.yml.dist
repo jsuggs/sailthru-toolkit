@@ -1,0 +1,7 @@
+# Create a definition for each environment
+dev:
+    api-key: X
+    api-secret: Y
+prod:
+    api-key: A
+    api-secret: B
