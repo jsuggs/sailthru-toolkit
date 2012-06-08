@@ -9,8 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractSailThruCommand extends Command
 {
-    const TEMPLATE_PREFIX = '[v2]';
-
     protected $app;
     protected $output;
     protected $clients;
@@ -53,25 +51,6 @@ abstract class AbstractSailThruCommand extends Command
         }
 
         return $this->clients[$env];
-    }
-
-    protected function findTemplateByName(\Sailthru_Client $client, $templateName)
-    {
-        // Get a list of all of the templates for this client
-        $templates = $client->getTemplates();
-
-        $templateNamePrefixed = sprintf('%s%s', self::TEMPLATE_PREFIX, $templateName);
-
-        $found = array_filter($templates['templates'], function ($template) use ($templateName, $templateNamePrefixed) {
-            return in_array($template['name'], array($templateName, $templateNamePrefixed));
-        });
-
-        if (1 === sizeof($found)) {
-            $template = array_pop($found);
-            return $template['name'];
-        }
-
-        throw new \InvalidArgumentException(sprintf('Neither template %s or %s were found', $templateName, $templateNamePrefixed));
     }
 
     protected function displayResponse($response)
