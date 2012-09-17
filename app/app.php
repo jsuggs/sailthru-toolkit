@@ -3,6 +3,7 @@
 require_once __DIR__ . '/bootstrap.php';
 
 $app = new Silex\Application();
+$app['autoloader']->registerNamespace('Buzz',     __DIR__ . '/../vendor/buzz/lib');
 $app['autoloader']->registerNamespace('Symfony',  __DIR__ . '/../vendor');
 $app['autoloader']->registerNamespace('SailThru', __DIR__ . '/../src');
 
