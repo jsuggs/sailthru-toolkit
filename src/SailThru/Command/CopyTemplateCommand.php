@@ -41,7 +41,7 @@ class CopyTemplateCommand extends AbstractSailThruCommand
             'Copying template %s from %s to %s',
             $input->getArgument('template-name'),
             $input->getArgument('from-env'),
-            $this->templateName
+            $input->getArgument('to-env')
         ));
 
         $fromTemplate = $this->fromClient->getTemplate($this->templateName);
