@@ -9,5 +9,6 @@ $console = new Symfony\Component\Console\Application('SailThru Awesomeness', '0.
 
 // Add the console commands here
 $console->add(new SailThru\Command\CopyTemplateCommand($app));
+$console->add(new SailThru\Command\UpdateMobileCommand($app));
 $console->add(new SailThru\Command\UploadJobCommand($app));
 $console->run();
