@@ -61,4 +61,9 @@ abstract class AbstractSailThruCommand extends Command
             $this->output->writeln('API Success');
         }
     }
+
+    protected function formatCurrency($input = null)
+    {
+        return sprintf('$%s', money_format('%i', ($input ?: 0)/ 100));
+    }
 }
