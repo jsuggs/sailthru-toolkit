@@ -11,6 +11,7 @@ $console = new Symfony\Component\Console\Application('SailThru Awesomeness', '0.
 $console->add(new SailThru\Command\CopyTemplateCommand($app));
 $console->add(new SailThru\Command\TemplateStatisticsReportCommand($app));
 $console->add(new SailThru\Command\UpdateMobileCommand($app));
+$console->add(new SailThru\Command\UpdateOptoutCommand($app));
 $console->add(new SailThru\Command\UploadJobCommand($app));
 $console->add(new SailThru\Command\ViewListCommand($app));
 $console->run();
