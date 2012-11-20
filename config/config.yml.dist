@@ -1,0 +1,2 @@
+parameters:
+    template_dir: '/path/to/your/sailthru/data'

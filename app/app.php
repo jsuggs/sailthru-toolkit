@@ -12,6 +12,11 @@ $app['api-keys'] = $app->share(function() {
     return $parser->parse(file_get_contents(__DIR__ . '/../config/api-keys.yml'));
 });
 
+$app['config'] = $app->share(function() {
+    $parser = new Symfony\Component\Yaml\Parser();
+    return $parser->parse(file_get_contents(__DIR__ . '/../config/config.yml'));
+});
+
 $directFileLoader = new Symfony\Component\ClassLoader\MapClassLoader(array(
     'Sailthru_Util'             => __DIR__.'/../vendor/SailThru/sailthru/Sailthru_Util.php',
     'Sailthru_Client'           => __DIR__.'/../vendor/SailThru/sailthru/Sailthru_Client.php',

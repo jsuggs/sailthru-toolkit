@@ -66,4 +66,13 @@ abstract class AbstractSailThruCommand extends Command
     {
         return sprintf('$%s', money_format('%i', ($input ?: 0)/ 100));
     }
+
+    protected function getParameter($name)
+    {
+        if (!array_key_exists($name, $this->app['config']['parameters'])) {
+            throw new \InvalidArgumentException(sprintf('The parameter "%s" does not exist in the configuration.  Check config/config.yml', (string) $name));
+        }
+
+        return $this->app['config']['parameters'][$name];
+    }
 }
