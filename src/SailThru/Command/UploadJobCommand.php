@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UploadJobCommand extends AbstractSailThruCommand
 {
     private $client;
+    private $files;
 
     protected function configure()
     {
@@ -17,9 +18,10 @@ class UploadJobCommand extends AbstractSailThruCommand
 
         $this
             ->setDescription('Upload a job')
-            ->addArgument('env',    InputArgument::REQUIRED, 'The env to update')
-            ->addArgument('email',  InputArgument::REQUIRED, 'The email to notifiy on completion')
-            ->addArgument('file',   InputArgument::REQUIRED, 'The file to upload')
+            ->addArgument('env',      InputArgument::REQUIRED, 'The env to update')
+            ->addArgument('file',     InputArgument::REQUIRED, 'The file to upload')
+            ->addArgument('max-size', InputArgument::OPTIONAL, 'The max size of the file to upload (in MB)', '5')
+            ->addArgument('email',    InputArgument::OPTIONAL, 'The email to notifiy on completion')
         ;
     }
 
@@ -31,25 +33,49 @@ class UploadJobCommand extends AbstractSailThruCommand
         if (!file_exists($input->getArgument('file'))) {
             throw new \RuntimeException(sprintf('The file %s does not exist'));
         }
+
+        $filesize = filesize($input->getArgument('file'));
+        $output->writeln(sprintf('The file is %d bytes', $filesize));
+        if (floor($filesize / 1024) > $input->getArgument('max-size')) {
+            $tmpDir = sys_get_temp_dir() . '/sailthru';
+            $filePrefix = 'chunk';
+
+            if (is_dir($tmpDir)) {
+                // Clean it out
+            } else {
+                mkdir($tmpDir);
+            }
+
+            exec(sprintf('split --bytes=%dm --verbose %s %s/%s 2>&1', $input->getArgument('max-size'), $input->getArgument('file'), $tmpDir, $filePrefix));
+
+            $this->files = glob(sprintf('%s/%s*', $tmpDir, $filePrefix));
+            $output->writeln(sprintf('The file will be uploaded in %d chunks', count($this->files)));
+        } else {
+            $this->files = array($input->getArgument('file'));
+        }
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(sprintf(
-            'Uploading file "%s" to env: %s',
-            $input->getArgument('file'),
-            $input->getArgument('env')
-        ));
+        foreach ($this->files as $file) {
+            $output->writeln(sprintf(
+                'Uploading file "%s" to env: %s',
+                $file,
+                $input->getArgument('env')
+            ));
 
-        $response = $this->client->apiPost('job', array(
-            'job' => 'update',
-            'file' => $input->getArgument('file'),
-            'report_email' => $input->getArgument('email'),
-        ), array(
-          'file'
-        ));
+            $options = array(
+                'job' => 'update',
+                'file' => $file,
+            );
 
-        $this->displayResponse($response);
+            if ($input->getArgument('email')) {
+                $options['report_email'] = $input->getArgument('email');
+            }
+
+            $response = $this->client->apiPost('job', $options, array('file'));
+            $this->displayResponse($response);
+        }
     }
 
     public function getCommandName()
