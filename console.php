@@ -16,6 +16,7 @@ $console->add(new SailThru\Command\SendEmailCommand($app));
 $console->add(new SailThru\Command\TemplateStatisticsReportCommand($app));
 $console->add(new SailThru\Command\UpdateMobileCommand($app));
 $console->add(new SailThru\Command\UpdateOptoutCommand($app));
+$console->add(new SailThru\Command\UpdateUserCommand($app));
 $console->add(new SailThru\Command\UploadJobCommand($app));
 $console->add(new SailThru\Command\ViewListCommand($app));
 $console->add(new SailThru\Command\ViewUserCommand($app));
