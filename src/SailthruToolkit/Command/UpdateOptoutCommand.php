@@ -1,27 +1,31 @@
 <?php
 
-namespace SailThru\Command;
+namespace SailthruToolkit\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UpdateMobileCommand extends AbstractSailThruCommand
+class UpdateOptoutCommand extends AbstractSailThruCommand
 {
-    private $fromClient;
-    private $toClient;
-    private $templateName;
+    private $client;
+    private $status;
+    protected static $validStatuses = array(
+        'none',
+        'all',
+        'blast',
+    );
 
     protected function configure()
     {
         parent::configure();
 
         $this
-            ->setDescription('Update a users mobile number')
+            ->setDescription('Update a users optout status')
             ->addArgument('env',    InputArgument::REQUIRED, 'The env to update')
             ->addArgument('email',  InputArgument::REQUIRED, 'The email of the user to update')
-            ->addArgument('mobile', InputArgument::REQUIRED, 'The users mobile number')
+            ->addArgument('status', InputArgument::REQUIRED, 'The users optout status (none|all|blast)')
         ;
     }
 
@@ -29,24 +33,27 @@ class UpdateMobileCommand extends AbstractSailThruCommand
     {
         parent::initialize($input, $output);
 
+        $this->status = $input->getArgument('status');
+        if (!in_array($this->status, self::$validStatuses)) {
+            throw new \InvalidArgumentException(sprintf('%s is not a valid status, only %s', $this->status, implode(', ', self::$validStatuses)));
+        }
+
         $this->client = $this->getSailThruClient($input->getArgument('env'));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln(sprintf(
-            'Updating mobile for "%s" to %s in env: %s',
+            'Updating status for "%s" to "%s" in env: %s',
             $input->getArgument('email'),
-            $input->getArgument('mobile'),
+            $input->getArgument('status'),
             $input->getArgument('env')
         ));
 
         $data = array(
             'id' => $input->getArgument('email'),
             'key' => 'email',
-            'keys' => array(
-                'sms' => $input->getArgument('mobile')
-            ),
+            'optout_email' => $this->status,
         );
 
         $response = $this->client->apiPost('user', $data);
@@ -55,6 +62,6 @@ class UpdateMobileCommand extends AbstractSailThruCommand
 
     public function getCommandName()
     {
-        return 'update-mobile';
+        return 'update-optout';
     }
 }

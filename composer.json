@@ -1,0 +1,26 @@
+{
+    "name": "jsuggs/sailthru-toolkit",
+    "description": "A toolkit for working with the SailThru API.",
+    "keywords": ["SailThru", "Silex"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonathon Suggs",
+            "email": "jsuggs@murmp.com"
+        }
+    ],
+    "require": {
+        "php": ">5.4",
+        "silex/silex": "1.0.*@dev",
+        "sailthru/sailthru-php5-client": "dev-master",
+        "symfony/class-loader": ">2.1",
+        "symfony/config": ">2.1",
+        "symfony/console": ">2.1",
+        "symfony/yaml": ">2.1",
+        "kriswallsmith/buzz": "dev-travis"
+    },
+    "autoload": {
+        "psr-0": { "SailthruToolkit": "src" }
+    },
+    "minimum-stability": "dev"
+}

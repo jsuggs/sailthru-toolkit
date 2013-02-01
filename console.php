@@ -5,19 +5,19 @@
 $app = require __DIR__ . '/app/app.php';
 
 // The console app
-$console = new Symfony\Component\Console\Application('SailThru Awesomeness', '0.1');
+$console = new Symfony\Component\Console\Application('Sailthru Awesomeness', '0.1');
 
 // Add the console commands here
-$console->add(new SailThru\Command\CopyTemplateCommand($app));
-$console->add(new SailThru\Command\DownloadTemplatesCommand($app));
-$console->add(new SailThru\Command\ExportScheduledSendsCommand($app));
-$console->add(new SailThru\Command\SearchTemplatesCommand($app));
-$console->add(new SailThru\Command\SendEmailCommand($app));
-$console->add(new SailThru\Command\TemplateStatisticsReportCommand($app));
-$console->add(new SailThru\Command\UpdateMobileCommand($app));
-$console->add(new SailThru\Command\UpdateOptoutCommand($app));
-$console->add(new SailThru\Command\UpdateUserCommand($app));
-$console->add(new SailThru\Command\UploadJobCommand($app));
-$console->add(new SailThru\Command\ViewListCommand($app));
-$console->add(new SailThru\Command\ViewUserCommand($app));
+$console->add(new SailthruToolkit\Command\CopyTemplateCommand($app));
+$console->add(new SailthruToolkit\Command\DownloadTemplatesCommand($app));
+$console->add(new SailthruToolkit\Command\ExportScheduledSendsCommand($app));
+$console->add(new SailthruToolkit\Command\SearchTemplatesCommand($app));
+$console->add(new SailthruToolkit\Command\SendEmailCommand($app));
+$console->add(new SailthruToolkit\Command\TemplateStatisticsReportCommand($app));
+$console->add(new SailthruToolkit\Command\UpdateMobileCommand($app));
+$console->add(new SailthruToolkit\Command\UpdateOptoutCommand($app));
+$console->add(new SailthruToolkit\Command\UpdateUserCommand($app));
+$console->add(new SailthruToolkit\Command\UploadJobCommand($app));
+$console->add(new SailthruToolkit\Command\ViewListCommand($app));
+$console->add(new SailthruToolkit\Command\ViewUserCommand($app));
 $console->run();

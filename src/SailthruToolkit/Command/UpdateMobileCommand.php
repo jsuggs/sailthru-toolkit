@@ -1,25 +1,27 @@
 <?php
 
-namespace SailThru\Command;
+namespace SailthruToolkit\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UpdateUserCommand extends AbstractSailThruCommand
+class UpdateMobileCommand extends AbstractSailThruCommand
 {
-    private $client;
+    private $fromClient;
+    private $toClient;
+    private $templateName;
 
     protected function configure()
     {
         parent::configure();
 
         $this
-            ->setDescription('Update a users profile vars')
+            ->setDescription('Update a users mobile number')
             ->addArgument('env',    InputArgument::REQUIRED, 'The env to update')
             ->addArgument('email',  InputArgument::REQUIRED, 'The email of the user to update')
-            ->addArgument('vars',   InputArgument::OPTIONAL, 'The vars (JSON formatted)', '[]')
+            ->addArgument('mobile', InputArgument::REQUIRED, 'The users mobile number')
         ;
     }
 
@@ -33,15 +35,18 @@ class UpdateUserCommand extends AbstractSailThruCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln(sprintf(
-            'Updating profile for "%s" in env: %s',
+            'Updating mobile for "%s" to %s in env: %s',
             $input->getArgument('email'),
+            $input->getArgument('mobile'),
             $input->getArgument('env')
         ));
 
         $data = array(
             'id' => $input->getArgument('email'),
             'key' => 'email',
-            'vars' => json_decode($input->getArgument('vars'), true),
+            'keys' => array(
+                'sms' => $input->getArgument('mobile')
+            ),
         );
 
         $response = $this->client->apiPost('user', $data);
@@ -50,6 +55,6 @@ class UpdateUserCommand extends AbstractSailThruCommand
 
     public function getCommandName()
     {
-        return 'update-user';
+        return 'update-mobile';
     }
 }
