@@ -14,7 +14,7 @@ class TemplateStatisticsReportCommand extends AbstractSailThruCommand
     const DATE_REPORT_FORMAT = 'm/d/Y';
 
     protected $fh;
-    protected $api;
+    protected $client;
     protected $dateStart;
     protected $dateEnd;
     protected $dateDiff;
@@ -36,7 +36,7 @@ class TemplateStatisticsReportCommand extends AbstractSailThruCommand
     {
         parent::initialize($input, $output);
 
-        $this->api = $this->getSailThruClient($input->getArgument('env'));
+        $this->client = $this->getSailThruClient($input->getArgument('env'));
 
         $this->dateStart = new \DateTime($input->getArgument('date_start'));
         $this->dateEnd = new \DateTime($input->getArgument('date_end'));
@@ -63,7 +63,7 @@ class TemplateStatisticsReportCommand extends AbstractSailThruCommand
 
             $output->writeln(sprintf('Pulling stats for %s', $start->format(self::DATE_OUTPUT_FORMAT)));
 
-            $stats = $this->api->stats_send(
+            $stats = $this->client->stats_send(
                 $input->getArgument('template'),
                 $start->format(self::DATE_API_FORMAT),
                 $end->format(self::DATE_API_FORMAT),
