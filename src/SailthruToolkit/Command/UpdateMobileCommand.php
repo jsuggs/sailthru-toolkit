@@ -9,9 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateMobileCommand extends AbstractSailThruCommand
 {
-    private $fromClient;
-    private $toClient;
-    private $templateName;
+    private $client;
 
     protected function configure()
     {
