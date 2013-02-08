@@ -44,6 +44,7 @@ class SearchTemplatesCommand extends AbstractSailThruCommand
             throw new \RuntimeException(sprintf('The directory <error>"%s"</error> does not exist, you\'ll need to download the templates locally first', $dir));
         }
 
+        // TODO Use Finder Component
         $searchRevisions = $input->getOption('search-revisions');
         $this->templates = array_map(function($basePath) use ($searchRevisions) {
             $templateRevisions = glob(sprintf('%s/*', escapeshellcmd($basePath)));

@@ -46,8 +46,10 @@ class UploadJobCommand extends AbstractSailThruCommand
                 mkdir($tmpDir);
             }
 
-            exec(sprintf('split --bytes=%dm --verbose %s %s/%s 2>&1', $input->getArgument('max-size'), $input->getArgument('file'), $tmpDir, $filePrefix));
+            // TODO Make cross platform
+            exec(sprintf('split --line-bytes=%dm --verbose %s %s/%s 2>&1', $input->getArgument('max-size'), $input->getArgument('file'), $tmpDir, $filePrefix));
 
+            // TODO Use Finder Component
             $this->files = glob(sprintf('%s/%s*', $tmpDir, $filePrefix));
             $output->writeln(sprintf('The file will be uploaded in %d chunks', count($this->files)));
         } else {
