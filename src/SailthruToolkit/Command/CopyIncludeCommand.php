@@ -18,9 +18,9 @@ class CopyIncludeCommand extends AbstractSailThruCommand
 
         $this
             ->setDescription('Copy a SailThru include')
-            ->addArgument('from-env',      InputArgument::REQUIRED, 'The env to copy from')
-            ->addArgument('to-env',        InputArgument::REQUIRED, 'The env to copy to')
-            ->addArgument('include-name',  InputArgument::REQUIRED, 'The include to copy')
+            ->addArgument('from-env', InputArgument::REQUIRED, 'The env to copy from')
+            ->addArgument('to-env',   InputArgument::REQUIRED, 'The env to copy to')
+            ->addArgument('includes', InputArgument::IS_ARRAY, 'Comma separated list of includes to copy')
         ;
     }
 
@@ -34,16 +34,18 @@ class CopyIncludeCommand extends AbstractSailThruCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(sprintf(
-            'Copying include %s from %s to %s',
-            $input->getArgument('include-name'),
-            $input->getArgument('from-env'),
-            $input->getArgument('to-env')
-        ));
+        foreach ($input->getArgument('includes') as $includeName) {
+            $output->writeln(sprintf(
+                'Copying include %s from %s to %s',
+                $includeName,
+                $input->getArgument('from-env'),
+                $input->getArgument('to-env')
+            ));
 
-        $include = $this->fromClient->getInclude($input->getArgument('include-name'));
-        $response = $this->toClient->saveInclude($input->getArgument('include-name'), $include);
-        $this->displayResponse($response);
+            $include = $this->fromClient->getInclude($includeName);
+            $response = $this->toClient->saveInclude($includeName, $include);
+            $this->displayResponse($response);
+        }
     }
 
     public function getCommandName()
