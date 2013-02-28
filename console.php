@@ -10,6 +10,7 @@ $console = new Symfony\Component\Console\Application('Sailthru Awesomeness', '0.
 // Add the console commands here
 $console->add(new SailthruToolkit\Command\CopyIncludeCommand($app));
 $console->add(new SailthruToolkit\Command\CopyTemplateCommand($app));
+$console->add(new SailthruToolkit\Command\DeleteListCommand($app));
 $console->add(new SailthruToolkit\Command\DownloadTemplatesCommand($app));
 $console->add(new SailthruToolkit\Command\ExportScheduledSendsCommand($app));
 $console->add(new SailthruToolkit\Command\SearchTemplatesCommand($app));
