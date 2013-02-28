@@ -18,6 +18,7 @@ $console->add(new SailthruToolkit\Command\TemplateStatisticsReportCommand($app))
 $console->add(new SailthruToolkit\Command\UpdateMobileCommand($app));
 $console->add(new SailthruToolkit\Command\UpdateOptoutCommand($app));
 $console->add(new SailthruToolkit\Command\UpdateUserCommand($app));
+$console->add(new SailthruToolkit\Command\UpdateUserKeysCommand($app));
 $console->add(new SailthruToolkit\Command\UploadJobCommand($app));
 $console->add(new SailthruToolkit\Command\ViewListCommand($app));
 $console->add(new SailthruToolkit\Command\ViewUserCommand($app));
