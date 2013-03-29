@@ -75,4 +75,17 @@ abstract class AbstractSailThruCommand extends Command
 
         return $this->app['config']['parameters'][$name];
     }
+
+    protected function createDirectory(OutputInterface $output, $directory)
+    {
+        if (!file_exists($directory)) {
+            if (OutputInterface::VERBOSITY_VERBOSE === $output->getVerbosity()) {
+                $output->writeln(sprintf('Directory <info>%s</info> does not exist.  Attempting to create', $directory));
+            }
+
+            if (!mkdir($directory, 0755, true)) {
+                throw new \RuntimeException(sprintf('Unable to create directory "%s"', $this->dir));
+            }
+        }
+    }
 }
