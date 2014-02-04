@@ -8,6 +8,7 @@ $app = require __DIR__ . '/app/app.php';
 $console = new Symfony\Component\Console\Application('Sailthru Awesomeness', '0.1');
 
 // Add the console commands here
+$console->add(new SailthruToolkit\Command\ClearAbandonedCartCommand($app));
 $console->add(new SailthruToolkit\Command\CopyIncludeCommand($app));
 $console->add(new SailthruToolkit\Command\CopyTemplateCommand($app));
 $console->add(new SailthruToolkit\Command\DeleteListCommand($app));
