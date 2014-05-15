@@ -22,5 +22,6 @@ $console->add(new SailthruToolkit\Command\UpdateUserCommand($app));
 $console->add(new SailthruToolkit\Command\UpdateUserKeysCommand($app));
 $console->add(new SailthruToolkit\Command\UploadJobCommand($app));
 $console->add(new SailthruToolkit\Command\ViewListCommand($app));
+$console->add(new SailthruToolkit\Command\ViewSendCommand($app));
 $console->add(new SailthruToolkit\Command\ViewUserCommand($app));
 $console->run();

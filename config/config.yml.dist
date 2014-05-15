@@ -1,2 +1,5 @@
 parameters:
     template_dir: '/path/to/your/sailthru/data'
+    include_dir: '/path/to/your/sailthru/data'
+    user_dir: '/path/to/your/sailthru/data'
+    send_dir: '/path/to/your/sailthru/data'
