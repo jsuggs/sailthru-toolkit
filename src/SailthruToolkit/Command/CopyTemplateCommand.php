@@ -11,7 +11,6 @@ class CopyTemplateCommand extends AbstractSailThruCommand
 {
     private $fromClient;
     private $toClient;
-    private $templateName;
 
     protected function configure()
     {
@@ -32,21 +31,38 @@ class CopyTemplateCommand extends AbstractSailThruCommand
         $this->fromClient = $this->getSailThruClient($input->getArgument('from-env'));
         $this->toClient = $this->getSailThruClient($input->getArgument('to-env'));
 
-        $this->templateName = $input->getArgument('template-name');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $templateName = $input->getArgument('template-name');
+
         $output->writeln(sprintf(
             'Copying template %s from %s to %s',
-            $input->getArgument('template-name'),
+            $templateName,
             $input->getArgument('from-env'),
             $input->getArgument('to-env')
         ));
 
-        $fromTemplate = $this->fromClient->getTemplate($this->templateName);
-        $response = $this->toClient->saveTemplate($this->templateName, $fromTemplate);
+        $fromTemplate = $this->fromClient->getTemplate($templateName);
+        $data = $this->formatTemplateData($fromTemplate);
+        $response = $this->toClient->saveTemplate($templateName, $data);
         $this->displayResponse($response);
+    }
+
+    protected function formatTemplateData($data)
+    {
+        $currentLabels = array_key_exists('labels', $data)
+            ? $data['labels']
+            : array();
+
+        $labels = array();
+        foreach ($currentLabels as $label) {
+            $labels[$label] = 1;
+        }
+        $data['labels'] = $labels;
+
+        return $data;
     }
 
     public function getCommandName()
