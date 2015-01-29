@@ -52,7 +52,7 @@ class CopyTemplateCommand extends AbstractSailThruCommand
 
     protected function formatTemplateData($data)
     {
-        $currentLabels = array_key_exists('labels', $data)
+        $currentLabels = array_key_exists('labels', $data) && is_array($data['labels'])
             ? $data['labels']
             : array();
 
