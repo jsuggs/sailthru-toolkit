@@ -17,6 +17,7 @@
         "symfony/config": "~2.6",
         "symfony/console": "~2.6",
         "symfony/yaml": "~2.6",
+        "symfony/finder": "~2.6",
         "kriswallsmith/buzz": "~0.13"
     },
     "require-dev": {

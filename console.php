@@ -7,22 +7,14 @@ $app = require __DIR__ . '/app/app.php';
 // The console app
 $console = new Symfony\Component\Console\Application('Sailthru Awesomeness', '0.2');
 
-// Add the console commands here
-$console->add(new SailthruToolkit\Command\CopyIncludeCommand($app));
-$console->add(new SailthruToolkit\Command\CopyTemplateCommand($app));
-$console->add(new SailthruToolkit\Command\DeleteListCommand($app));
-$console->add(new SailthruToolkit\Command\DownloadTemplatesCommand($app));
-$console->add(new SailthruToolkit\Command\ExportScheduledSendsCommand($app));
-$console->add(new SailthruToolkit\Command\ListCampaignsCommand($app));
-$console->add(new SailthruToolkit\Command\SearchTemplatesCommand($app));
-$console->add(new SailthruToolkit\Command\SendEmailCommand($app));
-$console->add(new SailthruToolkit\Command\TemplateStatisticsReportCommand($app));
-$console->add(new SailthruToolkit\Command\UpdateMobileCommand($app));
-$console->add(new SailthruToolkit\Command\UpdateOptoutCommand($app));
-$console->add(new SailthruToolkit\Command\UpdateUserCommand($app));
-$console->add(new SailthruToolkit\Command\UpdateUserKeysCommand($app));
-$console->add(new SailthruToolkit\Command\UploadJobCommand($app));
-$console->add(new SailthruToolkit\Command\ViewListCommand($app));
-$console->add(new SailthruToolkit\Command\ViewSendCommand($app));
-$console->add(new SailthruToolkit\Command\ViewUserCommand($app));
+$finder = new Symfony\Component\Finder\Finder();
+$finder->files()->in(__DIR__ . '/src')->name('*Command.php');
+
+foreach ($finder as $file) {
+    $class = sprintf('SailthruToolkit\Command\%s', $file->getBasename('.php'));
+    $r = new \ReflectionClass($class);
+    if ($r->isSubclassOf('SailthruToolkit\Command\AbstractSailThruCommand') && !$r->isAbstract()) {
+        $console->add($r->newInstance($app));
+    }
+}
 $console->run();
