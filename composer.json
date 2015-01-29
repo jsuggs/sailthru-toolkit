@@ -11,16 +11,19 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "silex/silex": "1.0.*@dev",
-        "sailthru/sailthru-php5-client": "dev-master",
-        "symfony/class-loader": ">2.1",
-        "symfony/config": ">2.1",
-        "symfony/console": ">2.1",
-        "symfony/yaml": ">2.1",
-        "kriswallsmith/buzz": "dev-master"
+        "silex/silex": "~1.1",
+        "sailthru/sailthru-php5-client": "~1.1.0",
+        "symfony/class-loader": "~2.6",
+        "symfony/config": "~2.6",
+        "symfony/console": "~2.6",
+        "symfony/yaml": "~2.6",
+        "kriswallsmith/buzz": "~0.13"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "~2.6"
     },
     "autoload": {
         "psr-0": { "SailthruToolkit": "src" }
     },
-    "minimum-stability": "dev"
+    "prefer-stable": true
 }

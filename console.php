@@ -5,7 +5,7 @@
 $app = require __DIR__ . '/app/app.php';
 
 // The console app
-$console = new Symfony\Component\Console\Application('Sailthru Awesomeness', '0.1');
+$console = new Symfony\Component\Console\Application('Sailthru Awesomeness', '0.2');
 
 // Add the console commands here
 $console->add(new SailthruToolkit\Command\CopyIncludeCommand($app));
@@ -13,6 +13,7 @@ $console->add(new SailthruToolkit\Command\CopyTemplateCommand($app));
 $console->add(new SailthruToolkit\Command\DeleteListCommand($app));
 $console->add(new SailthruToolkit\Command\DownloadTemplatesCommand($app));
 $console->add(new SailthruToolkit\Command\ExportScheduledSendsCommand($app));
+$console->add(new SailthruToolkit\Command\ListCampaignsCommand($app));
 $console->add(new SailthruToolkit\Command\SearchTemplatesCommand($app));
 $console->add(new SailthruToolkit\Command\SendEmailCommand($app));
 $console->add(new SailthruToolkit\Command\TemplateStatisticsReportCommand($app));
